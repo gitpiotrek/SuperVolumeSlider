@@ -7,6 +7,8 @@ import javafx.scene.control.Dialog;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
 import javafx.stage.StageStyle;
 
 import java.util.Optional;
@@ -15,30 +17,25 @@ import java.util.Random;
 public class Column extends Pane {
 
     Rectangle shape = new Rectangle();
+    private double prefHeight = 250.0;
 
-    public Column(){
+    public Column(Color color){
         super();
-        shape.setWidth(10.0);
-        shape.setHeight(50.0);
-        Random random = new Random();
-        double[] colorNumTab = new double[3];
-
-       for(int i = 0; i < 3; i++){
-         colorNumTab[i] = random.nextDouble();
-       }
-        Color color = new Color(colorNumTab[0], colorNumTab[1], colorNumTab[2], 1);
-        shape.setFill(color);
-
+        shape.setWidth(15.0);
+        shape.setHeight(100.0);
+        setColor(color);
         this.setOnMouseClicked(e -> {
             Optional<Color> pickedColor = showColorPickerDialog();
             pickedColor.ifPresent(v -> shape.setFill(v));
         });
-        this.setHeight(100.0);
+        shape.getTransforms().add(new Rotate(180));
+        shape.setY(-150.0);
+        this.setPrefHeight(prefHeight);
         this.getChildren().add(shape);
     }
 
     public void setShapeHeight(double height){
-        shape.setHeight(height * 100);
+        shape.setHeight(height * prefHeight);
     }
 
     private Optional<Color> showColorPickerDialog(){
@@ -58,5 +55,18 @@ public class Column extends Pane {
             return null;
         });
         return dialog.showAndWait();
+    }
+
+    public void setColor(Color color){
+        if(color == null) {
+            Random random = new Random();
+            double[] colorNumTab = new double[3];
+
+            for (int i = 0; i < 3; i++) {
+                colorNumTab[i] = random.nextDouble();
+            }
+            color = new Color(colorNumTab[0], colorNumTab[1], colorNumTab[2], 1);
+        }
+        shape.setFill(color);
     }
 }

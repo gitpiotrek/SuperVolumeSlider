@@ -33,13 +33,14 @@ public class VolumeSliderModel {
         if (mediaPlayer != null) {
             disposeMediaPlayer();
             setUp();
+            play();
         }
     }
 
     private void setUp() {
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.volumeProperty().bind(volumeLevel);
-        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setAutoPlay(false);
     }
 
     private void disposeMediaPlayer() {
