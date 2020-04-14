@@ -1,1 +1,1 @@
-git commit -m "first commit"
+Program na zaliczenie projektu z zastosowania porgramowania komponentowego
